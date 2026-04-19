@@ -16,11 +16,6 @@
 
         * { box-sizing: border-box; }
 
-        html {
-            scroll-snap-type: y mandatory;
-            scroll-behavior: smooth;
-        }
-
         body {
             font-family: var(--font-family);
             margin: 0; padding: 0;
@@ -31,50 +26,44 @@
         }
 
         .page {
-            height: 100vh;
+            min-height: 100vh;
             width: 100%;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: 0 10%; /* Немного сузили поля, чтобы контент был по центру */
+            padding: 0 8%;
             position: relative;
-            overflow: hidden;
-            scroll-snap-align: start;
-            scroll-snap-stop: always;
+            overflow-x: hidden;
+            page-break-after: always;
         }
 
         h1, h2 { font-style: italic; position: relative; z-index: 2; }
-        
-        /* Увеличенные заголовки для страниц 2-5 */
-        h2 { 
-            font-size: clamp(2rem, 5vw, 3.5rem); 
-            text-transform: uppercase; 
-            font-weight: 900; 
-            margin-bottom: 20px; 
-            line-height: 1.1;
-        }
-        h2::after { content: ""; display: block; width: 80px; height: 8px; background: var(--gold); margin-top: 15px; }
+        h2 { font-size: 2.3rem; text-transform: uppercase; font-weight: 900; margin-bottom: 5px; }
+        h2::after { content: ""; display: block; width: 60px; height: 6px; background: var(--gold); margin-top: 10px; }
 
-        /* Сетка: увеличили приоритет текстовой колонки */
+        .shipment-container { margin: 20px 0 30px 0; display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+        
+        .important-note {
+            font-size: 1.1rem;
+            color: var(--dark);
+            background: var(--gold);
+            padding: 10px 20px;
+            display: inline-block;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Базовая сетка (2 колонки) */
         .content-grid { 
             display: grid; 
-            grid-template-columns: 1.4fr 0.6fr; 
-            gap: 40px; 
+            grid-template-columns: 1.2fr 0.8fr; 
+            gap: 60px; 
             align-items: center; 
         }
 
-        /* Увеличенный шрифт основного текста */
-        .text-block p { 
-            font-size: clamp(1.2rem, 2.2vw, 1.85rem); 
-            line-height: 1.5; 
-            font-weight: 400; 
-            margin-bottom: 30px; 
-        }
-
-        .image-block img { 
-            width: 100%; 
-            box-shadow: 25px 25px 0px -5px var(--gold); 
-        }
+        .text-block p { font-size: 1.4rem; line-height: 1.7; font-weight: 300; margin-bottom: 25px; }
+        .image-block img { width: 100%; box-shadow: 30px 30px 0px -10px var(--gold); }
 
         #hero-page { 
             padding: 0; 
@@ -88,52 +77,89 @@
             color: #fff; 
         }
         #hero-page h1 { font-size: clamp(2.5rem, 10vw, 6rem); font-weight: 900; text-transform: uppercase; margin: 0; text-shadow: 0 2px 15px rgba(0,0,0,0.7); }
+        #hero-page p { font-size: clamp(1rem, 4vw, 1.8rem); color: var(--gold); text-transform: uppercase; letter-spacing: 3px; margin-top: 20px; text-shadow: 0 2px 10px rgba(0,0,0,0.7); }
 
-        /* Увеличенные списки для страниц проектов */
-        .list-style { list-style: none; padding: 0; }
-        .list-style li { 
-            padding: 15px 0; 
-            font-size: clamp(1.1rem, 2vw, 1.6rem); 
-            border-bottom: 1px solid rgba(0,0,0,0.1); 
-            display: flex; 
-            align-items: center; 
-            line-height: 1.3;
-        }
-        .dark-page .list-style li { border-bottom-color: rgba(255,255,255,0.1); }
-        .list-style li::before { content: "•"; color: var(--gold); margin-right: 20px; font-size: 2.5rem; flex-shrink: 0; }
+        /* Сетка прайса (3 колонки) */
+        .price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .price-card { background: var(--gray-bg); border-left: 5px solid var(--gold); padding: 15px; display: flex; flex-direction: column; }
+        .material-thumb { width: 100%; height: 130px; background-size: cover; background-position: center; border: 1px solid #eee; }
+        .price-card h3 { margin: 0 0 5px 0; font-size: 1.3rem; color: var(--dark); }
+        .price-card p { margin: 0; font-size: 0.85rem; color: #666; line-height: 1.4; min-height: 35px; }
+        .price-value { margin-top: 15px; font-size: 1.25rem; font-weight: 900; color: var(--dark); border-top: 2px solid var(--gold); padding-top: 10px; white-space: nowrap; }
+        .price-value span { font-size: 0.8rem; font-weight: 400; color: #777; margin-left: 5px; }
 
         .dark-page { background: var(--dark); color: #fff; }
-
-        /* Прайс-лист */
-        .price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
-        .price-card { background: var(--gray-bg); border-left: 5px solid var(--gold); padding: 12px; }
-        .material-thumb { width: 100%; height: 110px; background-size: cover; background-position: center; }
-        .price-value { margin-top: 10px; font-size: 1.2rem; font-weight: 900; border-top: 2px solid var(--gold); padding-top: 8px; }
+        .list-style { list-style: none; padding: 0; font-size: 1.3rem; }
+        .list-style li { padding: 12px 0; border-bottom: 1px solid rgba(0,0,0,0.1); display: flex; align-items: center; }
+        .dark-page .list-style li { border-bottom-color: rgba(255,255,255,0.1); }
+        .list-style li::before { content: "•"; color: var(--gold); margin-right: 15px; font-size: 2rem; flex-shrink: 0; }
 
         #footer-page { color: #fff; justify-content: center; }
         #footer-page::before {
             content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
             background: url('IMG_1370.jpg') no-repeat center center/cover; opacity: 0.6; z-index: 1;
         }
-        #footer-page::after { content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1; }
-        .footer-content { position: relative; z-index: 2; text-align: center; width: 100%; }
-        .map-box { height: 350px; border: 3px solid var(--gold); background: #222; overflow: hidden; }
-
-        /* Адаптивность для мобильных */
-        @media (max-width: 900px) {
-            .page { padding: 0 5%; }
-            .content-grid { grid-template-columns: 1.1fr 0.9fr; gap: 15px; }
-            h2 { font-size: 1.3rem; }
-            h2::after { width: 40px; height: 4px; }
-            .text-block p { font-size: 0.95rem; line-height: 1.4; }
-            .list-style li { font-size: 0.85rem; padding: 8px 0; }
-            .price-grid { grid-template-columns: repeat(2, 1fr); }
-            .map-box { height: 200px; }
+        #footer-page::after {
+            content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5); z-index: 1;
         }
 
+        .footer-content { position: relative; z-index: 2; text-align: center; width: 100%; }
+        .footer-grid { display: flex; flex-direction: column; align-items: center; gap: 40px; margin-top: 20px; }
+        .map-section { width: 100%; max-width: 1100px; }
+        .map-box { height: 480px; border: 3px solid var(--gold); background: #222; margin-bottom: 10px; overflow: hidden; }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            width: 100%;
+            max-width: 1100px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding-top: 30px;
+        }
+        .contact-item { text-align: center; }
+        .contact-label { color: var(--gold); text-transform: uppercase; font-size: 0.9rem; font-weight: 700; margin-bottom: 8px; display: block; }
+        .contact-value { font-size: 1.1rem; font-weight: 400; line-height: 1.5; }
+        .tel-link { color: inherit; text-decoration: none; transition: color 0.3s ease; }
+        .tel-link:hover { color: var(--gold); }
+
+        /* АДАПТИВНОСТЬ: Сохранение горизонтального вида на мобильных */
+        @media (max-width: 900px) {
+            .page { padding: 20px 5%; }
+            /* Оставляем 2 колонки, но сжимаем зазор */
+            .content-grid { grid-template-columns: 1.1fr 0.9fr; gap: 15px; }
+            /* Уменьшаем шрифты */
+            .text-block p { font-size: 0.85rem; line-height: 1.4; margin-bottom: 10px; }
+            h2 { font-size: 1.2rem; }
+            h2::after { width: 30px; height: 4px; }
+            .list-style li { font-size: 0.8rem; padding: 6px 0; }
+            .image-block img { box-shadow: 10px 10px 0px -3px var(--gold); }
+            
+            /* Прайс в 2 колонки (как в PDF каталоге) */
+            .price-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .price-card { padding: 10px; }
+            .material-thumb { height: 80px; }
+            .price-card h3 { font-size: 0.9rem; }
+            .price-card p { font-size: 0.7rem; min-height: 25px; }
+            .price-value { font-size: 0.9rem; margin-top: 8px; }
+            .important-note { font-size: 0.75rem; padding: 5px 10px; }
+
+            /* Футер */
+            .contact-info { grid-template-columns: 1fr; gap: 15px; padding-top: 15px; }
+            .map-box { height: 250px; }
+            .contact-value { font-size: 0.9rem; }
+        }
+
+        /* Дополнительное сжатие для совсем маленьких экранов */
         @media (max-width: 480px) {
-            .text-block p { font-size: 0.8rem; }
-            h2 { font-size: 1.1rem; }
+            .text-block p { font-size: 0.75rem; }
+            h2 { font-size: 1rem; }
+        }
+
+        @media print {
+            body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .page { height: 100vh !important; page-break-after: always !important; }
         }
     </style>
 </head>
@@ -148,8 +174,8 @@
         <div class="content-grid">
             <div class="text-block">
                 <h2>О компании</h2>
-                <p>ТОО «Ready for construction» — признанный лидер на рынке Казахстана в производстве качественных инертных материалов и дорожном строительстве.</p>
-                <p>С 2014 года мы обеспечиваем крупнейшие государственные и частные проекты материалами высшей пробы.</p>
+                <p>ТОО «Ready for construction» — ведущая казахстанская компания в сегменте дорожного строительства и производства инертных материалов.</p>
+                <p>С 2014 года мы выступаем надежным партнером в реализации масштабных инфраструктурных проектов.</p>
             </div>
             <div class="image-block">
                 <img src="2026-03-26%2010-58-37.jpg" alt="Техника">
@@ -163,9 +189,8 @@
                 <img src="fon1.jpg" alt="Завод">
             </div>
             <div class="text-block">
-                <h2>Производство</h2>
-                <p>Наш дробильно-сортировочный комплекс у ГОК «Васильковский» — это мощный индустриальный узел.</p>
-                <p>Мы гарантируем стабильную отгрузку до 9 500 тонн готовой продукции ежесуточно.</p>
+                <h2>Производство щебня</h2>
+                <p>Наш комплекс у ГОК «Васильковский» обеспечивает производительность до 9 500 тонн в сутки.</p>
             </div>
         </div>
     </div>
@@ -173,11 +198,11 @@
     <div class="page">
         <div class="content-grid">
             <div class="text-block">
-                <h2>Дорожные проекты</h2>
+                <h2>Проекты с участием</h2>
                 <ul class="list-style">
-                    <li>Реконструкция трассы Алматы – Усть-Каменогорск</li>
-                    <li>Автодорога Петропавловск – граница РФ (на Омск)</li>
-                    <li>Магистраль Алматы – Талдыкорган</li>
+                    <li>Реконструкция дороги Алматы – Усть-Каменогорск</li>
+                    <li>Петропавловск – гр. РФ (на Омск)</li>
+                    <li>Реконструкция дороги Алматы – Талдыкорган</li>
                 </ul>
             </div>
             <div class="image-block">
@@ -192,57 +217,88 @@
                 <img src="IMG_4647.jpg" alt="Авиация">
             </div>
             <div class="text-block">
-                <h2>Авиационные объекты</h2>
+                <h2>Проекты с участием</h2>
                 <ul class="list-style">
-                    <li>Взлетная полоса (ИВПП) Петропавловск</li>
-                    <li>Новая полоса ИВПП аэропорта Алматы</li>
-                    <li>Аэродром Жетыген и Перрон Шымкент</li>
+                    <li>ИВПП Петропавловск / Новая ИВПП Алматы</li>
+                    <li>Аэродром Жетыген / Перрон Шымкент</li>
                 </ul>
             </div>
         </div>
     </div>
 
     <div class="page">
-        <h2>Прайс-лист</h2>
+        <h2>Прайс-лист продукции</h2>
+        <div class="shipment-container">
+            <div class="important-note">Режим отгрузки: 8:00-19:00 и 20:00-7:00</div>
+            <div class="important-note">Предоставляем услуги перевозки.</div>
+        </div>
         <div class="price-grid">
             <div class="price-card">
                 <div class="material-thumb" style="background-image: url('0-5.jpg');"></div>
                 <h3>Фракция 0-5 мм</h3>
-                <div class="price-value">2 600 тг/т</div>
+                <p>Отсев для бетонных работ.</p>
+                <div class="price-value">2 600 <span>тг/т</span></div>
             </div>
             <div class="price-card">
                 <div class="material-thumb" style="background-image: url('5-20.jpg');"></div>
                 <h3>Фракция 5-20 мм</h3>
-                <div class="price-value">4 200 тг/т</div>
+                <p>Для бетона и асфальта.</p>
+                <div class="price-value">4 200 <span>тг/т</span></div>
             </div>
             <div class="price-card">
                 <div class="material-thumb" style="background-image: url('20-40.jpg');"></div>
                 <h3>Фракция 20-40 мм</h3>
-                <div class="price-value">3 000 тг/т</div>
+                <p>Для дорожных оснований.</p>
+                <div class="price-value">3 000 <span>тг/т</span></div>
             </div>
             <div class="price-card">
                 <div class="material-thumb" style="background-image: url('40-70.jpg');"></div>
                 <h3>Фракция 40-70 мм</h3>
-                <div class="price-value">2 800 тг/т</div>
+                <p>Для ж/д путей.</p>
+                <div class="price-value">2 800 <span>тг/т</span></div>
             </div>
             <div class="price-card">
                 <div class="material-thumb" style="background-image: url('0-70.jpg');"></div>
                 <h3>Фракция 0-70 мм</h3>
-                <div class="price-value">2 500 тг/т</div>
+                <p>Для несущего слоя дорог.</p>
+                <div class="price-value">2 500 <span>тг/т</span></div>
             </div>
             <div class="price-card">
                 <div class="material-thumb" style="background-image: url('0-200.jpg');"></div>
                 <h3>Фракция 0-200 мм</h3>
-                <div class="price-value">2 200 тг/т</div>
+                <p>Для оснований дорог.</p>
+                <div class="price-value">2 200 <span>тг/т</span></div>
             </div>
         </div>
     </div>
 
     <div class="page" id="footer-page">
         <div class="footer-content">
-            <h2>Контакты</h2>
-            <div class="map-box">
-                <iframe src="https://yandex.ru/map-widget/v1/?ll=69.286201%2C53.435499&mode=search&oid=242502476679&ol=biz&z=14&l=sat%2Cskl" width="100%" height="100%" frameborder="0"></iframe>
+            <h2>Место расположение</h2>
+            <div class="footer-grid">
+                <div class="map-section">
+                    <div class="map-box">
+                        <iframe src="https://yandex.ru/map-widget/v1/?ll=69.286201%2C53.435499&mode=search&oid=242502476679&ol=biz&z=14&l=sat%2Cskl" 
+                                width="100%" height="100%" frameborder="0" allowfullscreen="true" style="position:relative;"></iframe>
+                    </div>
+                </div>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span class="contact-label">Офис</span>
+                        <span class="contact-value">ТОО «Ready for Construction»<br>БИН: 140440000160</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-label">Адрес</span>
+                        <span class="contact-value">РК, с. Зеренда, Тауелсиздик, 38 «А»</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-label">Телефоны</span>
+                        <span class="contact-value">
+                            <a href="tel:+77057544704" class="tel-link">+7 (705) 754 47 04</a><br>
+                            <a href="tel:+77773160509" class="tel-link">+7 (777) 316 05 09</a>
+                        </span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
