@@ -16,7 +16,6 @@
 
         * { box-sizing: border-box; }
 
-        /* НАСТРОЙКИ ПЕРЕХОДОВ И СКРОЛЛА */
         html, body {
             height: 100%;
             margin: 0;
@@ -24,8 +23,6 @@
             scroll-snap-type: y mandatory;
             overflow-y: scroll;
             scroll-behavior: smooth;
-            -webkit-overflow-scrolling: touch;
-            background-color: var(--dark);
         }
 
         body {
@@ -36,7 +33,6 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* КОНТЕЙНЕР СТРАНИЦЫ */
         .page {
             height: 100vh;
             height: 100dvh; 
@@ -48,7 +44,7 @@
             position: relative;
             scroll-snap-align: start;
             scroll-snap-stop: always;
-            overflow: hidden; /* Запрет внутренней прокрутки */
+            overflow: hidden;
         }
 
         h1, h2 { font-style: italic; position: relative; z-index: 2; }
@@ -79,7 +75,6 @@
         .text-block p { font-size: 1.4rem; line-height: 1.7; font-weight: 300; margin-bottom: 25px; }
         .image-block img { width: 100%; height: auto; box-shadow: 20px 20px 0px -5px var(--gold); }
 
-        /* ГЛАВНЫЙ ЭКРАН */
         #hero-page { 
             padding: 0; 
             text-align: center; 
@@ -90,7 +85,6 @@
         #hero-page h1 { font-size: clamp(2.5rem, 8vw, 6rem); font-weight: 900; text-transform: uppercase; margin: 0; text-shadow: 0 2px 15px rgba(0,0,0,0.7); }
         #hero-page p { font-size: clamp(1.2rem, 4vw, 1.8rem); color: var(--gold); text-transform: uppercase; letter-spacing: 3px; margin-top: 20px; }
 
-        /* ПРАЙС-ЛИСТ */
         .price-grid { 
             display: grid; 
             grid-template-columns: repeat(3, 1fr); 
@@ -109,7 +103,6 @@
         .list-style li { padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; text-align: left; }
         .list-style li::before { content: "•"; color: var(--gold); margin-right: 15px; font-size: 2rem; flex-shrink: 0; }
 
-        /* КОНТАКТЫ И КАРТА */
         #footer-page { color: #fff; justify-content: flex-start; padding-top: 40px; }
         .footer-bg { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: url('IMG_1370.jpg') no-repeat center center/cover; opacity: 0.6; z-index: 1; }
         .footer-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 1; }
@@ -119,9 +112,9 @@
         .contact-label { color: var(--gold); text-transform: uppercase; font-size: 0.8rem; font-weight: 700; margin-bottom: 5px; display: block; }
         .tel-link { color: inherit; text-decoration: none; }
 
-        /* ПЛАВАЮЩАЯ КНОПКА ЗВОНКА */
+        /* ПЛАВАЮЩАЯ КНОПКА ЗВОНКА (ПЕРЕНЕСЕНА НАПРАВО) */
         .phone-float {
-            position: fixed; width: 60px; height: 60px; bottom: 30px; left: 30px;
+            position: fixed; width: 60px; height: 60px; bottom: 30px; right: 30px;
             background-color: var(--gold); color: var(--dark); border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
             box-shadow: 2px 2px 15px rgba(0,0,0,0.4); z-index: 1000;
@@ -137,12 +130,13 @@
 
         /* АДАПТАЦИЯ ДЛЯ МОБИЛЬНЫХ */
         @media (max-width: 900px) {
-            .page { padding: 30px 15px; }
-            h2 { font-size: 1.4rem; }
-            .text-block p { font-size: 0.9rem; line-height: 1.4; margin-bottom: 10px; }
+            .page { padding: 25px 15px; }
+            h2 { font-size: 1.3rem; }
+            .text-block p { font-size: 0.85rem; line-height: 1.3; margin-bottom: 8px; }
             .content-grid { grid-template-columns: 1fr; gap: 10px; }
             .image-block { order: -1; }
-            .image-block img { max-height: 20vh; width: auto; box-shadow: 10px 10px 0px -3px var(--gold); }
+            /* УВЕЛИЧЕННЫЕ ФОТОГРАФИИ НА СТР. 2-5 */
+            .image-block img { max-height: 35vh; width: auto; box-shadow: 8px 8px 0px -3px var(--gold); display: block; margin: 0 auto; }
             
             .price-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
             .price-card { padding: 6px; }
@@ -151,12 +145,14 @@
             .price-card p { font-size: 0.65rem; min-height: auto; }
             .price-value { font-size: 0.8rem; margin-top: 5px; padding-top: 5px; }
             
-            .list-style li { font-size: 0.85rem; padding: 5px 0; }
-            .map-box { height: 200px; }
-            .contact-info { grid-template-columns: 1fr; gap: 10px; padding-top: 10px; }
-            .contact-value { font-size: 0.8rem; }
-            .important-note { font-size: 0.7rem; padding: 6px 10px; }
-            .phone-float { width: 50px; height: 50px; bottom: 20px; left: 20px; }
+            .list-style li { font-size: 0.8rem; padding: 4px 0; }
+            .map-box { height: 180px; }
+            .contact-info { grid-template-columns: 1fr; gap: 8px; padding-top: 10px; }
+            .contact-value { font-size: 0.75rem; }
+            .important-note { font-size: 0.65rem; padding: 6px 10px; }
+            
+            /* КНОПКА НА МОБИЛЬНОМ */
+            .phone-float { width: 50px; height: 50px; bottom: 20px; right: 20px; }
         }
     </style>
 </head>
