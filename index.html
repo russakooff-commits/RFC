@@ -25,16 +25,28 @@
             -webkit-font-smoothing: antialiased;
         }
 
+        /* Настройка плавного появления */
         .page {
-            min-height: 100vh; /* Заменил height на min-height для мобильных */
+            min-height: 100vh;
             width: 100%;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: 40px 8%; /* Увеличил отступы сверху/снизу */
+            padding: 40px 8%;
             position: relative;
             overflow-x: hidden;
             page-break-after: always;
+            
+            /* Начальное состояние для эффекта Fade */
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1.2s ease, transform 1.2s ease;
+        }
+
+        /* Класс, который будет добавляться при прокрутке */
+        .page.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         h1, h2 { font-style: italic; position: relative; z-index: 2; }
@@ -54,7 +66,6 @@
             letter-spacing: 0.5px;
         }
 
-        /* Адаптивная сетка контента */
         .content-grid { 
             display: grid; 
             grid-template-columns: 1.2fr 0.8fr; 
@@ -85,7 +96,6 @@
         #hero-page h1 { font-size: clamp(2.5rem, 8vw, 6rem); font-weight: 900; text-transform: uppercase; margin: 0; text-shadow: 0 2px 15px rgba(0,0,0,0.7); padding: 0 10px; }
         #hero-page p { font-size: clamp(1.2rem, 4vw, 1.8rem); color: var(--gold); text-transform: uppercase; letter-spacing: 3px; margin-top: 20px; text-shadow: 0 2px 10px rgba(0,0,0,0.7); }
 
-        /* Адаптивный прайс */
         .price-grid { 
             display: grid; 
             grid-template-columns: repeat(3, 1fr); 
@@ -158,6 +168,7 @@
         .tel-link:hover { color: var(--gold); }
 
         @media print {
+            .page { opacity: 1 !important; transform: none !important; }
             body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
             .page { height: 100vh !important; page-break-after: always !important; }
         }
@@ -302,6 +313,24 @@
             </div>
         </div>
     </div>
+
+    <script>
+        const observerOptions = {
+            threshold: 0.2 // Секция активируется, когда 20% её площади в кадре
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.page').forEach(page => {
+            observer.observe(page);
+        });
+    </script>
 
 </body>
 </html>
